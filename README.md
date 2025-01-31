@@ -14,12 +14,12 @@ A simple **Express.js API** that connects to **Ollama's locally hosted LLMs** (L
 ## 📦 **Installation & Setup**
 ### **1️⃣ Install Ollama**
 If you haven't installed Ollama yet, follow the official [installation guide](https://ollama.ai/download).
-```sh
+
 
 ### **2️⃣Clone the Repository**
 git clone https://github.com/akinmiday/deepseek-api.git
 cd ollama-api
-```
+
 
 ### **3️⃣ Install Dependencies**
 ```sh
