@@ -46,7 +46,7 @@ ollama serve
 
 ### **6️⃣ Run the API Server**
 ```sh
-node index.js
+node server.js
 ```
 
 ---
@@ -137,6 +137,11 @@ When you start the API (`node index.js`), you'll see a **custom ASCII banner** l
   🖥️ Running on: my-laptop | darwin | arm64  
   🔄 Restart to refresh server logs.
 ```
+
+## **Screenshots**
+![Image Description](./screenshot/image1.png)
+![Image Description](./screenshot/image2.png)
+
 
 ---
 
