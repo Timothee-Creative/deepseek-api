@@ -8,9 +8,9 @@ ollama serve &
 # Tunggu beberapa detik agar Ollama selesai inisialisasi
 sleep 5
 
-echo "Loading model (smollm)..."
+echo "Loading model (smollm:135m)..."
 # Jalankan model DeepSeek secara background agar model tersedia di Ollama
-ollama run smollm &
+ollama run smollm:135m &
 
 # Tunggu beberapa detik agar model selesai inisialisasi
 sleep 5
