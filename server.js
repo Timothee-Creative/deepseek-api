@@ -8,7 +8,7 @@ const app = express();
 const PORT = process.env.PORT || 5000;
 const OLLAMA_API_URL = process.env.OLLAMA_API_URL || "http://localhost:11434/api/generate";
 const OLLAMA_BASE_URL = process.env.OLLAMA_BASE_URL || "http://localhost:11434/api";
-const DEFAULT_MODEL = process.env.OLLAMA_DEFAULT_MODEL || "deepseek-r1:1.5b";
+const DEFAULT_MODEL = process.env.OLLAMA_DEFAULT_MODEL || "smollm";
 
 app.use(express.json());
 app.use(cors());
