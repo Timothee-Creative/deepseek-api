@@ -17,11 +17,10 @@ COPY . .
 # Jika file .env belum ada, salin dari .env.example
 RUN if [ ! -f .env ]; then cp .env.example .env; fi
 
-# Install Ollama secara otomatis
-# (Pastikan URL download sesuai dengan rilis dan platform yang Anda gunakan)
-RUN curl -L https://ollama.ai/download/ollama-linux-amd64.tar.gz -o ollama.tar.gz && \
-    tar -xzvf ollama.tar.gz -C /usr/local/bin && \
-    rm ollama.tar.gz
+# Install Ollama (sesuai dokumentasi resmi untuk Linux AMD64)
+RUN curl -L https://ollama.com/download/ollama-linux-amd64.tgz -o ollama.tgz && \
+    tar -C /usr -xzf ollama.tgz && \
+    rm ollama.tgz
 
 # Ekspose port untuk API Node.js (5000) dan Ollama (11434)
 EXPOSE 5000 11434
