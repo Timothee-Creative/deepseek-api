@@ -14,8 +14,9 @@ RUN npm install
 # Salin seluruh kode aplikasi ke dalam image
 COPY . .
 
-# Instal open-webui langsung dari GitHub
-RUN pip3 install git+https://github.com/open-webui/open-webui.git
+# Upgrade pip dan instal open-webui langsung dari GitHub menggunakan opsi PEP517
+RUN pip3 install --upgrade pip && \
+    pip3 install --use-pep517 git+https://github.com/open-webui/open-webui.git
 
 # Jika file .env belum ada, salin dari .env.example
 RUN if [ ! -f .env ]; then cp .env.example .env; fi
