@@ -13,13 +13,16 @@ const DEFAULT_MODEL = process.env.OLLAMA_DEFAULT_MODEL || "smollm:135m";
 app.use(express.json());
 app.use(cors());
 
-// 🔹 Route to Check API Status
-app.get("/", (req, res) => {
+// Buat router untuk semua endpoint API dengan prefix /api
+const router = express.Router();
+
+// 🔹 Route untuk Check API Status
+router.get("/", (req, res) => {
   res.json({ message: `✅ Ollama API is running with model: ${DEFAULT_MODEL}` });
 });
 
-// 🔹 Route to List Available Models
-app.get("/models", async (req, res) => {
+// 🔹 Route untuk List Available Models
+router.get("/models", async (req, res) => {
   try {
     const response = await axios.get(`${OLLAMA_BASE_URL}/tags`);
     res.json(response.data);
@@ -29,22 +32,18 @@ app.get("/models", async (req, res) => {
   }
 });
 
-// 🔹 Route to Generate a Response Using Default Model
-app.post("/chat", async (req, res) => {
+// 🔹 Route untuk Generate AI Response
+router.post("/chat", async (req, res) => {
   const { prompt, stream } = req.body;
-  const model = DEFAULT_MODEL; // Always use the default model
-
   if (!prompt) {
     return res.status(400).json({ error: "❌ Prompt is required" });
   }
-
   try {
     const response = await axios.post(OLLAMA_API_URL, {
-      model,
+      model: DEFAULT_MODEL,
       prompt,
-      stream: stream || false, // Default to false if not provided
+      stream: stream || false,
     });
-
     res.json(response.data);
   } catch (error) {
     console.error("❌ Error generating response:", error.message);
@@ -52,11 +51,10 @@ app.post("/chat", async (req, res) => {
   }
 });
 
-// 🔹 Route to Pull a New Model (if needed)
-app.post("/pull-model", async (req, res) => {
+// 🔹 Route untuk Pull a Model dari Ollama
+router.post("/pull-model", async (req, res) => {
   try {
     const response = await axios.post(`${OLLAMA_BASE_URL}/pull`, { name: DEFAULT_MODEL });
-
     res.json({ success: true, message: `✅ Model ${DEFAULT_MODEL} pulled successfully`, response: response.data });
   } catch (error) {
     console.error("❌ Error pulling model:", error.message);
@@ -64,9 +62,11 @@ app.post("/pull-model", async (req, res) => {
   }
 });
 
-// 🔹 Start the Server with a Creative Terminal Message
+// Mount router dengan prefix /api
+app.use("/api", router);
+
 app.listen(PORT, () => {
-  console.clear(); // Clear console for a fresh start
+  console.clear(); // Clear console for fresh start
 
   const banner = `
   ██████╗  █████╗ ██╗      █████╗ ███╗   ███╗ █████╗ 
@@ -76,11 +76,9 @@ app.listen(PORT, () => {
   ██║     ██║  ██║███████╗██║  ██║██║ ╚═╝ ██║██║  ██║
   ╚═╝     ╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝
 
-  🚀 Ollama API is running! Access it at: http://localhost:${PORT}  
-  🤖 Model Loaded: ${DEFAULT_MODEL}  
+  🚀 Node.js API is running on port ${PORT} with model: ${DEFAULT_MODEL}
   🖥️ Running on: ${os.hostname()} | ${os.platform()} | ${os.arch()}
   🔄 Restart to refresh server logs.
   `;
-
   console.log("\x1b[36m%s\x1b[0m", banner); // Cyan text
 });

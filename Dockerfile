@@ -22,8 +22,8 @@ RUN curl -L https://ollama.com/download/ollama-linux-amd64.tgz -o ollama.tgz && 
     tar -C /usr -xzf ollama.tgz && \
     rm ollama.tgz
 
-# Ekspose port untuk API Node.js (5000) dan Ollama (11434)
-EXPOSE 5000 11434
+# Ekspose port untuk API Node.js (5000), Ollama (11434), dan Open WebUI (8080)
+EXPOSE 5000 11434 8080
 
 # Salin skrip startup dan beri hak akses eksekusi
 COPY start.sh /start.sh
